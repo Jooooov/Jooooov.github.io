@@ -25,6 +25,11 @@
   var urlLang = new URLSearchParams(location.search).get('lang');
   if (urlLang && I18N[urlLang]) applyLang(urlLang);
   else if (saved && I18N[saved]) applyLang(saved);
+  else {
+    /* primeira visita: segue a língua do browser — PT/ES se for o caso, senão EN */
+    var nav = ((navigator.languages && navigator.languages[0]) || navigator.language || '').slice(0, 2).toLowerCase();
+    applyLang(I18N[nav] ? nav : 'en');
+  }
 
   /* ---------- email montado em JS ---------- */
   var ADDR = ['jooooov', 'gmail.com'].join('@');

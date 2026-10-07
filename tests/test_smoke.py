@@ -43,3 +43,23 @@ def test_no_private_info():
         content = read(p).lower()
         for banned in ("brambles", "chemetil", "barbara", "workcortex"):
             assert banned not in content, f"'{banned}' não deve aparecer no site pessoal"
+
+
+def test_share_preview():
+    """Pré-visualização ao partilhar (LinkedIn/WhatsApp): og:image absoluto e ficheiro presente."""
+    html = read("index.html")
+    m = re.search(r'<meta property="og:image" content="([^"]+)"', html)
+    assert m, "falta og:image"
+    assert m.group(1).startswith("https://jooooov.github.io/"), "og:image tem de ser URL absoluto"
+    assert os.path.exists(os.path.join(ROOT, m.group(1).split("jooooov.github.io/")[1])), "imagem og em falta"
+    assert '<meta property="og:url"' in html
+
+
+def test_linkedin_contact():
+    assert "linkedin.com/in/joao-vicente129" in read("index.html")
+
+
+def test_language_follows_browser():
+    """Sem ?lang nem escolha guardada, a língua vem do browser (PT/ES, senão EN)."""
+    js = read("assets/main.js")
+    assert "navigator.language" in js
