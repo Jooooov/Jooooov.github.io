@@ -63,3 +63,10 @@ def test_language_follows_browser():
     """Sem ?lang nem escolha guardada, a língua vem do browser (PT/ES, senão EN)."""
     js = read("assets/main.js")
     assert "navigator.language" in js
+
+
+def test_deploy_workflow():
+    """Publicação por GitHub Actions: só index.html + assets vão para o site."""
+    wf = read(".github/workflows/pages.yml")
+    assert "actions/deploy-pages" in wf and "branches: [main]" in wf
+    assert "cp index.html _site/" in wf and "cp -r assets _site/" in wf
