@@ -1,5 +1,5 @@
 # Publica o site no GitHub Pages a cada push para main.
-# Substitui o "Deploy from a branch", que deixou de disparar a 2026-07-20.
+# Substitui o "Deploy from a branch". A 2026-10-07 dois pushes não dispararam publicação (causa desconhecida); aqui cada execução fica visível em Actions.
 name: Deploy site
 
 on:
